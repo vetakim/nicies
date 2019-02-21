@@ -107,7 +107,7 @@ Xft.dpi:                    100
 ! URxvt*color15:                   #002b36
 
 ! Zenburn color-scheme
- URxvt*background              :#1f1f1f
+ URxvt*background              :#242424
  URxvt*foreground              :#dcdccc
 
 ! black + red
