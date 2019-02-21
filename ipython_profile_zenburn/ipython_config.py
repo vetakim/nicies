@@ -250,7 +250,6 @@ c.InteractiveShell.colors = 'Linux'
 #  TerminalInteractiveShell.prompts object directly.
 #c.InteractiveShell.prompts_pad_left = True
 
-c.TerminalInteractiveShell.prompts = '>>>'
 
 c.InteractiveShellApp.exec_lines = [
         'import numpy as np',
