@@ -1,0 +1,145 @@
+!               \--<(o_o)>----<xdm>----<(^_^)>--/
+!xlogin*greetFont:           xft:Anonymice Powerline:size=14:antialias=true:hinting=true:hintstyle=hintmedium
+xlogin*greetFont:           -adobe-helvetica-bold-o-normal--20-*-*-*-*-*-iso8859-1
+!xlogin*font:                xft:Anonymice Powerline:size=11:antialias=true:hinting=true:hintstyle=hintmedium
+xlogin*font:                -adobe-helvetica-medium-r-normal--14-*-*-*-*-*-iso8859-1
+!xlogin*promtFont:           xft:Anonymice Powerline:size=10:antialias=true:hinting=true:hintstyle=hintmedium
+xlogin*promtFont:           -adobe-helvetica-bold-r-normal--14-*-*-*-*-iso8859-1
+!xlogin*failFont:            xft:Anonymice Powerline:size=11:antialias=true:hinting=true:hintstyle=hintmedium
+xlogin*failFont:            -adobe-helvetica-bold-r-normal--14-*-*-*-*-iso8859-1
+xlogin*frameWidth:          1
+xlogin*innerFramesWidth:    1
+xlogin*logoPadding:         0
+xlogin*geometry:            300x175-0-0
+!               <(^_^)>----<urxvt>----<(^_^)>
+!URxvt*font:                 xft:Source Code Pro for Powerline:size=9:antialias=true:hinting=true:hintstyle=hintmedium
+URxvt*font:                 xft:Cousine for Powerline:size=12:antialias=true:hinting=true:hintstyle=hintmedium
+!URxvt*font:                 xft:Anonymice Powerline:size=9:antialias=true:hinting=true:hintstyle=hintmedium
+!URxvt*font:                 xft:Droid Sans Mono:size=10:antialias=true:hinting=true:hintstyle=hintmedium
+URxvt.letterSpace:          -1.5
+URxvt*cursorBlink:          yes
+URxvt*geometry:             78x50
+URxvt*scrollBar:            True
+URxvt*scrollBar_right:      True
+URxvt*mouseWheelScrollPage: True
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
+URxvt.url-select.launcher:  firefox
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt*keysym.F11:           perl:fullscreen:switch
+URxvt*buffered:             true
+URxvt*underlineColor:       #b58900
+URxvt*depth:                32
+URxvt*borderless:           1
+URxvt*saveLines:            10000
+URxvt.iconFile:             /usr/share/icons/icons/archlinux-icon-crystal-16.svg
+URxvt*title:                terminal
+URxvt*scrollstyle:          rxvt
+URxvt*thickness:            10
+URxvt*jumpScroll:           False
+!URxvt*scrollColor:          #808080
+!Urxvt*scrollTtyKeypress:    True
+!URxvt*throughColor:         #e9e9e9
+!URxvt*transparent:          True
+!URxvt*tintColor:            #002b36
+!URxvt*shading:              111
+!URxvt*borderColor:          #cecece
+
+!               <(-_-)>----<xterm>----<(-_-)>
+xterm*faceName:             Droid Sans Mono for Powerline
+!xterm*faceName:             fontawesome-webfont
+xterm*faceSize:             9
+xterm*boldeMode:            false
+xterm*scrollLines:          true
+xterm*savelines:            10000
+xterm*AutoRaise:            on
+xterm*termtype:             vt100
+xterm*jumpScroll:           true
+xterm*multiScroll:          true
+xterm*cursorBlink:          yes
+
+
+Xft.dpi:                    100
+
+!Solarized colorscheme
+!Light theme
+!   \|/
+!  --O--
+!   /|\
+!*background:                #fdf6e3 не удаляй эту закомментированную
+!строчку, без нее светлый фон не включается
+!URxvt*background:                #fdf6e3
+!URxvt*foreground:                 #5C6768
+
+!Dark theme
+!  /^^^^^\
+! <[-]|[-]>
+!  \  ~  /
+!   *****
+!*background:                #002b36
+!*foreground:                #839496
+
+!               <(^~^)>----Solaris colors----<(^~^)>
+!этот цвет был в теме изначально (или нет)
+!*foreground:                #657b83
+! URxvt*fading:                    40
+! URxvt*fadeColor:                 #fdf6e3
+! URxvt*cursorColor:               #586e75
+! URxvt*pointerColorBackground:    #93a1a1
+! URxvt*pointerColorForeground:    #586e75
+! URxvt*color0:                    #eee8d5
+! URxvt*color1:                    #dc322f
+! URxvt*color2:                    #859900
+! URxvt*color3:                    #b58900
+! URxvt*color4:                    #268bd2
+! URxvt*color5:                    #d33682
+! URxvt*color6:                    #2aa198
+! URxvt*color7:                    #073642
+! URxvt*color9:                    #cb4b16
+! URxvt*color8:                    #fdf6e3
+! URxvt*color10:                   #93a1a1
+! URxvt*color11:                   #839496
+! URxvt*color12:                   #657b83
+! URxvt*color13:                   #6c71c4
+! URxvt*color14:                   #586e75
+! URxvt*color15:                   #002b36
+
+! Zenburn color-scheme
+ URxvt*background              :#1f1f1f
+ URxvt*foreground              :#dcdccc
+
+! black + red
+ URxvt.color0                  :#1f1f1f
+! URxvt.color1                  :#705050
+ URxvt.color1                  :#AE3333
+
+! green + yellow
+ URxvt*color2                  :#60b48a
+ URxvt*color3                  :#dfaf8f
+
+! blue + purple
+ URxvt*color4                  :#506070
+ URxvt*color5                  :#dc8cc3
+
+! cyan + white
+ URxvt*color6                  :#8cd0d3
+ URxvt*color7                  :#dcdccc
+
+! bright-black + bright-red
+ URxvt*color8                  :#709080
+ URxvt*color9                  :#dca3a3
+
+! bright-green + bright-yellow
+ URxvt*color10                 :#c3bf9f
+ URxvt*color11                 :#f0dfaf
+
+! bright-blue + bright-purple
+ URxvt*color12                 :#94bff3
+ URxvt*color13                 :#ec93d3
+
+! bright-cyan + bright-white
+ URxvt*color14                 :#93e0e3
+ URxvt*color15                 :#ffffff
+
