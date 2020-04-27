@@ -1,3 +1,29 @@
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state('/home/aeryn/.cache/dein')
+    call dein#begin('/home/aeryn/.cache/dein')
+
+    " Let dein manage dein
+    call dein#add('/home/aeryn/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+    call dein#add('Shougo/neosnippet.vim')
+    call dein#add('Shougo/deoplete.nvim')
+    call dein#add('Shougo/neosnippet-snippets')
+    call dein#add('flazz/vim-colorschemes')
+    call dein#add('scrooloose/syntastic')
+    call dein#add('scrooloose/nerdtree')
+    call dein#add('scrooloose/nerdcommenter')
+    call dein#add('majutsushi/tagbar')
+    call dein#end()
+    call dein#save_state()
+endif
+
+" install not installed plugins on startup.
+
+if dein#check_install()
+  call dein#install()
+endif
+
 set nocompatible
 filetype plugin indent on
 set hidden               " Не выгружать буфер когда переключаешься на другой
@@ -61,7 +87,8 @@ set ruler                   " Строка статуса
 set mousehide               " Скрывать курсор мыши когда печатаем
 
 "настройка цветовой схемы
-set t_Co=256                " поддержка 256 цветов в терминале ( необходимо TERM=xterm-256color)
+set t_ut=
+"set t_Co=256                " поддержка 256 цветов в терминале ( необходимо TERM=xterm-256color)
 "colorscheme solarized " Неплохие схемы: calmar256-dark (только ее нет), peaksea, lucius, wombat256
 colorscheme zenburn " Неплохие схемы: calmar256-dark (только ее нет), peaksea, lucius, wombat256
 set background=dark
@@ -184,30 +211,4 @@ map <F4> :execute "vimgrep /\\" . expand("<cword>") . "/j **/*.{cpp,h,py,tex,txt
 
 "искать строку по команде Search среди файлов с расширениями cpp, h, py, tex, txt
 command -nargs=1 Search vimgrep /<args>/gj ./**/*.{cpp,h,py,tex,txt} <Bar> cw
-
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-
-if dein#load_state('/home/aeryn/.cache/dein')
-    call dein#begin('/home/aeryn/.cache/dein')
-
-    " Let dein manage dein
-    call dein#add('/home/aeryn/.cache/dein/repos/github.com/Shougo/dein.vim')
-
-    call dein#add('Shougo/neosnippet.vim')
-    call dein#add('Shougo/deoplete.nvim')
-    call dein#add('Shougo/neosnippet-snippets')
-    call dein#add('flazz/vim-colorschemes')
-    call dein#add('scrooloose/syntastic')
-    call dein#add('scrooloose/nerdtree')
-    call dein#add('scrooloose/nerdcommenter')
-    call dein#add('majutsushi/tagbar')
-    call dein#end()
-    call dein#save_state()
-endif
-
-" install not installed plugins on startup.
-
-if dein#check_install()
-  call dein#install()
-endif
 
