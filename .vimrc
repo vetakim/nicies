@@ -1,10 +1,26 @@
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+let $CACHE = expand('~/.cache')
+if !isdirectory($CACHE)
+  call mkdir($CACHE, 'p')
+endif
+if &runtimepath !~# '/dein.vim'
+  let s:dein_dir = fnamemodify('dein.vim', ':p')
+  if !isdirectory(s:dein_dir)
+    let s:dein_dir = $CACHE . '/dein/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' . substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
+endif
 
-if dein#load_state('/home/aeryn/.cache/dein')
-    call dein#begin('/home/aeryn/.cache/dein')
+"set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state('/home/vetakim/.cache/dein')
+    call dein#begin('/home/vetakim/.cache/dein')
 
     " Let dein manage dein
-    call dein#add('/home/aeryn/.cache/dein/repos/github.com/Shougo/dein.vim')
+    call dein#add('/home/vetakim/.cache/dein/repos/github.com/Shougo/dein.vim')
 
     call dein#add('Shougo/neosnippet.vim')
     call dein#add('Shougo/deoplete.nvim')
@@ -14,6 +30,7 @@ if dein#load_state('/home/aeryn/.cache/dein')
     call dein#add('scrooloose/nerdtree')
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('majutsushi/tagbar')
+    call dein#add('jlfwong/vim-mercenary')
     call dein#end()
     call dein#save_state()
 endif
@@ -177,10 +194,10 @@ nmap    <S-F3> :call MyHlSearch()<CR>
 imap    <S-F3> <Esc>:call MyHlSearch()<CR>
 vmap    <S-F3> <Esc>:call MyHlSearch()<CR>gv
 
-" F4 -- просмотр ошибок
-nmap    <F8>    :copen<CR>
-imap    <F8>    <esc>:copen<CR>
-vmap    <F8>    <esc>:copen<CR>
+"" F4 -- просмотр ошибок
+"nmap    <F8>    :copen<CR>
+"imap    <F8>    <esc>:copen<CR>
+"vmap    <F8>    <esc>:copen<CR>
 
 " переход к следующей/предыдущей ошибке + развернуть fold + в центр экрана + сообщение об ошибке
 map     <C-F8>  :cn<CR>zvzz:cc<CR>
@@ -202,13 +219,36 @@ set switchbuf=newtab
 "autocmd vimenter * NERDTree
 "autocmd vimenter * TagbarToggle
 
+let paneopened=0
+let paneopened2=0
+
+function! SetProject()
+    :!tmux split-window -h && tmux send-keys -t .1 "cd common" Enter && tmux split-window -t 1 -v && tmux send-keys -t.2 "cd bin" Enter
+endfunction
+
+function! Makefpo()
+    :!tmux send-keys -t .1 "cd ../common" Enter "make -f makefile.gnu clean-all" Enter "make -f makefile.gnu fpo217" Enter "date" Enter
+endfunction
+
+function! RunFPO()
+    :!tmux send-keys -t .2 "cd ./bin" Enter "cp ../../regserv.xml ." Enter "./regservm start" Enter "cp ~/libtypical/* ../lib/" cp Enter "./FPO217" Enter
+endfunction
+
+function! KillFPO()
+    :!tmux send-keys -t .2 C-c Enter "cd ../" Enter
+endfunction
+
 "Показать NERDTree по нажатию F3
 map <F1> :NERDTreeToggle<CR>
 "Показать Tagbar по нажатию F3
 map <F2> :TagbarToggle<CR>
 "This mapping uses <cword> to get the word under the cursor, and searches for it in the current directory and all subdirectories, opening the quickfix window when done:
 map <F4> :execute "vimgrep /\\" . expand("<cword>") . "/j **/*.{cpp,h,py,tex,txt}" <Bar> cw<CR>
-
 "искать строку по команде Search среди файлов с расширениями cpp, h, py, tex, txt
 command -nargs=1 Search vimgrep /<args>/gj ./**/*.{cpp,h,py,tex,txt} <Bar> cw
+"map<F5> :new !cd ~/src77ya6vp-fpo/common && export RTSET_ROOT=~/7mcf3 && make -f makefile.gnu fpo217 <Bar>  <enter>
+map<F5> :call Makefpo() <enter>
+map<F6> :call RunFPO() <enter>
+map<F7> :call SetProject() <enter>
+map<F8> :call KillFPO() <enter>
 

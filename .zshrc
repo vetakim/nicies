@@ -59,8 +59,6 @@ export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/
 export PYTHONPATH=$HOME/gambles:$HOME/gambles/radar:$HOME/aspiranture/antenna/:$HOME/aspiranture/norad/:$HOME/aspiranture/norad/Pepelats
 eval `dircolors $HOME/.config/dircolors-solarized/dircolors.ansi-universal`
 #export TERM=rxvt-unicode-256color
-export http_proxy=http://proxy-01.usr.rtimints.ojsc:3128
-export https_proxy=http://proxy-01.usr.rtimints.ojsc:3128
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export STARDICT_DATA_DIR=$HOME/./config
 

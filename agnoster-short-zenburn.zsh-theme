@@ -58,7 +58,7 @@ prompt_segment() {
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
     echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
   else
-    echo -n "%{%k%F{238}%}$RIGHT_TRIANGLE%{$bg%}%{$fg%}"
+    echo -n "%{%k%F{239}%}$RIGHT_TRIANGLE%{$bg%}%{$fg%}"
   fi
   CURRENT_BG=$1
   [[ -n $3 ]] && echo -n $3
@@ -157,7 +157,7 @@ prompt_hg() {
         st='±'
       elif `hg st | grep -q "^[MA]"`; then
         # if any modification
-        prompt_segment 51 0
+        prompt_segment 051 0
         st='±'
       else
         # if working copy is clean
