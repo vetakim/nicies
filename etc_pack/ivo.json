@@ -1,0 +1,22 @@
+{
+    "tle_file":
+    {
+	"catalog_file_name": "../etc/ivo/ALL_TLE.TXT",
+	"time_extrapolation": 0.0,
+	"time_step_second": 0.0,
+	"station_number": 2,
+	"max_count_satellites": 500,
+	"work_mode": 1
+    },
+    "tle_db":
+    {
+	"host": "127.0.0.1",
+	"reserv": "10.12.51.30",
+	"port": 5432,
+	"database": "task1054",
+	"user": "postgres",
+	"password": "",
+	"reconnect_count": 3,
+	"connection_timeout": 1
+    }
+}

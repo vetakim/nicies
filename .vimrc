@@ -223,19 +223,23 @@ let paneopened=0
 let paneopened2=0
 
 function! SetProject()
-    :!tmux split-window -h && tmux send-keys -t .1 "cd common" Enter && tmux split-window -t 1 -v && tmux send-keys -t.2 "cd bin" Enter
+    :!tmux split-window -h && tmux send-keys -t .1 "cd common" Enter && tmux split-window -t 1 -v && tmux send-keys -t.2 "Hello, govnokoder" Enter
 endfunction
 
 function! Makefpo()
     :!tmux send-keys -t .1 "cd ../common" Enter "make -f makefile.gnu clean-all" Enter "make -f makefile.gnu fpo217" Enter "date" Enter
 endfunction
 
+function! MakefpoCLANG()
+    :!tmux send-keys -t .1  "make -f makefile.gnu clean-all" Enter "make -f makefile.gnu fpo217 CXX=clang++ CC=clang SANITIZE=yes" Enter
+endfunction
+
 function! RunFPO()
-    :!tmux send-keys -t .2 "cd ./bin" Enter "cp ../../regserv.xml ." Enter "./regservm start" Enter "cp ~/libtypical/* ../lib/" cp Enter "./FPO217" Enter
+    :!tmux send-keys -t .2 "export ASAN_OPTIONS=abort_on_error=1:disable_coredump=0:unmap_shadow_on_exit=1" Enter "/home/vetakim/builder/prepare_configs.sh `pwd`" Enter
 endfunction
 
 function! KillFPO()
-    :!tmux send-keys -t .2 C-c Enter "cd ../" Enter
+    :!tmux send-keys -t .2 C-c Enter
 endfunction
 
 "Показать NERDTree по нажатию F3
@@ -251,4 +255,5 @@ map<F5> :call Makefpo() <enter>
 map<F6> :call RunFPO() <enter>
 map<F7> :call SetProject() <enter>
 map<F8> :call KillFPO() <enter>
+map<F9> :call MakefpoCLANG() <enter>
 

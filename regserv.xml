@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application  Name="regserv" Description="Registration socket server">
+    <common Logging="true" Severity="Error" />
+    <project Name="regserv">
+        <socket Name="/tmp/socket_reg" />
+        <plugins Path="../lib/plugins" />
+        <database Host="127.0.0.1:5432" ReserveHost="127.0.0.1:5432" Database="task766final" User="postgres" Password="" />
+        <logging Name="../log/regserv.log" />
+        <node Type="VM" Host="127.0.0.1" />
+    </project>
+</application>
+
