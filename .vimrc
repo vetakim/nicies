@@ -16,11 +16,11 @@ endif
 
 "set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('/home/vetakim/.cache/dein')
-    call dein#begin('/home/vetakim/.cache/dein')
+if dein#load_state('~/.cache/dein')
+    call dein#begin('~/.cache/dein')
 
     " Let dein manage dein
-    call dein#add('/home/vetakim/.cache/dein/repos/github.com/Shougo/dein.vim')
+    call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
     call dein#add('Shougo/neosnippet.vim')
     call dein#add('Shougo/deoplete.nvim')
@@ -235,7 +235,7 @@ function! MakefpoCLANG()
 endfunction
 
 function! RunFPO()
-    :!tmux send-keys -t .2 "export ASAN_OPTIONS=abort_on_error=1:disable_coredump=0:unmap_shadow_on_exit=1" Enter "/home/vetakim/builder/prepare_configs.sh `pwd`" Enter
+    :!tmux send-keys -t .2 "export ASAN_OPTIONS=abort_on_error=1:disable_coredump=0:unmap_shadow_on_exit=1" Enter "~/.vimfpo/builder/prepare_configs.sh `pwd`" Enter
 endfunction
 
 function! KillFPO()
