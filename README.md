@@ -10,3 +10,6 @@ Clone dircolors-solarized and rename (or link) it into $HOME/.dir_colors
 
 ## TMUX
 To apply tmux conf use CTRL+A : source-file ~/.tmux.conf
+
+## install all configs
+sh install.sh
