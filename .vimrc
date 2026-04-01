@@ -31,6 +31,10 @@ if dein#load_state('~/.cache/dein')
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('majutsushi/tagbar')
     call dein#add('jlfwong/vim-mercenary')
+    call dein#add('dense-analysis/ale')
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('airblade/vim-gitgutter')
+    call dein#add('junegunn/gv.vim', {'depends': 'fugitive'})
     call dein#end()
     call dein#save_state()
 endif
@@ -41,6 +45,35 @@ if dein#check_install()
   call dein#install()
 endif
 
+
+" Настройки ALE (после dein#end())
+let g:ale_linters = {
+            \ 'python': ['flake8', 'mypy', 'ruff', 'pylsp'],
+            \ 'cpp': ['clangtidy', 'cppcheck'],
+            \ 'c': ['clangtidy', 'cppcheck']
+            \ }
+
+let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black', 'isort'],
+            \ 'cpp': ['clang-format'],
+            \ 'c': ['clang-format']
+            \ }
+
+let g:ale_fix_on_enter = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+
+" Навигация по ошибкам
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" ALE команды
+nmap <silent> <C-b> <Plug>(ale_go_to_definition)
+nmap <silent> <C-t> <Plug>(ale_go_to_type_definition)
+nmap <silent> <C-f> :ALEFix<CR>
+
 set nocompatible
 filetype plugin indent on
 set hidden               " Не выгружать буфер когда переключаешься на другой
@@ -50,6 +83,10 @@ set mouse=a
 "if has('mouse')
     "set mouse=a
 "endif
+
+" режим вставки из внешних источников
+set pastetoggle=<F10>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""" " Редактирование
 " поведение строк set scrolloff=6         " количество строк вокруг курсора
 set number              " показывать номера строк
@@ -76,10 +113,17 @@ autocmd FileType make set noexpandtab tabstop=8 shiftwidth=8
 autocmd FileType tex set textwidth=78 foldmethod=marker tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 "autocmd FileType tex set textwidth=78 foldmethod=indent tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 
+" for cpy
+autocmd FileType py set textwidth=78 foldmethod=marker tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+
 " for cpp
 autocmd FileType cpp set foldmethod=indent textwidth=78 softtabstop=4 shiftwidth=4 tabstop=4 expandtab
+
 autocmd FileType xml set textwidth=178 foldmethod=indent
 autocmd FileType qml set textwidth=78 foldmethod=indent
+
+autocmd FileType html set textwidth=178 foldmethod=indent tabstop=4 softtabstop=2 shiftwidth=4
+autocmd FileType js set textwidth=178 foldmethod=indent tabstop=4 softtabstop=2 shiftwidth=4
 
 " for octave
 au BufNewFile,BufRead *.m set filetype=octave
@@ -167,8 +211,8 @@ set foldlevel=1             "                                                ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set tags+=~/.vim/tags/qt4tags
 " switch on/off spelling
-imap    <F3>    <Esc>:set spell!<CR>
-nmap    <F3>    <Esc>:set spell!<CR>
+"imap    <F3>    <Esc>:set spell!<CR>
+"nmap    <F3>    <Esc>:set spell!<CR>
 " Очистить подсветку последнего найденного выражения
 " следующий буфер
  nmap    <S-F5>  :bn<CR>
@@ -222,12 +266,21 @@ set switchbuf=newtab
 let paneopened=0
 let paneopened2=0
 
-function! SetProject()
-    :!tmux split-window -h && tmux send-keys -t .1 "cd common" Enter && tmux split-window -t 1 -v && tmux send-keys -t.2 "Hello, govnokoder" Enter
+function! SetProjectTwoScreens()
+    let g:is_one_screen=0
+    :!urxvt -T "launch_board" -e zsh -c "tmux new-session -s launch \\; send-keys -t 0 'cd ~/Downloads/Emulator\\ Nord' Enter \\; send-keys -t 0 'wmctrl -r launch_board -e 0,1920,0,800,600' Enter \\; split-window -h \\; send-keys -t 1 'cd ~/testing' Enter \\; split-window -v -t 1 \\; send-keys -t 2 'cd ~/testing' Enter \\; split-window -v -t 2 \\; send-keys -t 3 'cd ~/testing' Enter \\; select-pane -t 0" &
+endfunction
+
+function! SetProject(emulator_on)
+    if a:emulator_on
+        :!tmux split-window -h && tmux send-keys -t .1 "cd ~/projects/trip" Enter && tmux split-window -t .1 -v && tmux send-keys -t .2 "cd ~/Downloads/Emulator\\ Nord" Enter
+    else
+        :!tmux split-window -h && tmux send-keys -t .1 "cd ~/projects/trip" Enter
+    endif
 endfunction
 
 function! Makefpo()
-    :!tmux send-keys -t .1 "cd ../common" Enter "make -f makefile.gnu clean-all" Enter "make -f makefile.gnu fpo217" Enter "date" Enter
+    :rightbelow vertical terminal ++close zsh -c "source ~/py_environments/radar_envy/bin/activate; source /opt/ros/humble/setup.zsh; ./build.sh; echo Build completed. Press Enter to close...; read; exit"
 endfunction
 
 function! MakefpoCLANG()
@@ -235,10 +288,12 @@ function! MakefpoCLANG()
 endfunction
 
 function! RunFPO()
-    :!tmux send-keys -t .2 "export ASAN_OPTIONS=abort_on_error=1:disable_coredump=0:unmap_shadow_on_exit=1" Enter "~/.vimfpo/builder/prepare_configs.sh `pwd`" Enter
+    :!tmux send-keys -t .2 "./server -e 0 -f nord_17-57-37_17-10-2024_patched.bin" Enter
+    :!tmux send-keys -t .1 "source /home/aeryn/projects/radar/install/setup.zsh" Enter 'export RCUTILS_CON SOLE_OUTPUT_FORMAT="[{time}] [{name}:]: {message}"' Enter "ros2 launch radar_gui radar_gui.launch.py" Enter
 endfunction
 
 function! KillFPO()
+    :!tmux send-keys -t .1 C-c Enter
     :!tmux send-keys -t .2 C-c Enter
 endfunction
 
@@ -253,7 +308,6 @@ command -nargs=1 Search vimgrep /<args>/gj ./**/*.{cpp,h,py,tex,txt} <Bar> cw
 "map<F5> :new !cd ~/src77ya6vp-fpo/common && export RTSET_ROOT=~/7mcf3 && make -f makefile.gnu fpo217 <Bar>  <enter>
 map<F5> :call Makefpo() <enter>
 map<F6> :call RunFPO() <enter>
-map<F7> :call SetProject() <enter>
+map<F7> :call SetProject(1) <enter>
 map<F8> :call KillFPO() <enter>
 map<F9> :call MakefpoCLANG() <enter>
-
