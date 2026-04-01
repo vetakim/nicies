@@ -18,3 +18,4 @@ cp -rf builder ~/.vimfpo
 
 rm -rf fonts
 rm -rf ohmyzsh
+echo "don't forget to install packages listed in packages.txt"
